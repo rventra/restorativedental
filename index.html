@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restorative Dental - Brian Aguirre Liquidation Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            200: '#bcccdc',
+                            300: '#9fb3c8',
+                            400: '#829ab1',
+                            500: '#627d98',
+                            600: '#486581',
+                            700: '#334e68',
+                            800: '#243b53',
+                            900: '#102a43',
+                            950: '#0a1929'
+                        },
+                        teal: {
+                            500: '#0d9488',
+                            600: '#0f766e'
+                        }
+                    },
+                    fontFamily: {
+                        'display': ['Fraunces', 'serif'],
+                        'body': ['DM Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+        }
+        .font-display {
+            font-family: 'Fraunces', serif;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 2s ease-in-out infinite;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        .animate-delay-300 { animation-delay: 0.3s; }
+        .animate-delay-400 { animation-delay: 0.4s; }
+
+        @media print {
+            .no-print { display: none !important; }
+            .print-break { page-break-before: always; }
+            body { font-size: 12px; }
+            .shadow-lg, .shadow-xl { box-shadow: none !important; }
+        }
+
+        details summary::-webkit-details-marker { display: none; }
+        details summary { list-style: none; }
+
+        .table-row-highlight {
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0.1) 100%);
+        }
+
+        .variance-critical {
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+        }
+
+        .sticky-nav {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-navy-900">
+    <!-- Sticky Navigation -->
+    <nav class="sticky top-0 z-50 sticky-nav border-b border-slate-200 no-print">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-navy-700">RDG Liquidation Analysis</span>
+                <div class="flex items-center gap-4 text-sm">
+                    <a href="#summary" class="text-navy-600 hover:text-teal-600 transition">Summary</a>
+                    <a href="#sensitivity" class="text-navy-600 hover:text-teal-600 transition">Sensitivity</a>
+                    <a href="#variance" class="text-navy-600 hover:text-teal-600 transition">Variance</a>
+                    <a href="#non-recurring" class="text-navy-600 hover:text-teal-600 transition">Non-Recurring</a>
+                    <a href="#action-items" class="text-navy-600 hover:text-teal-600 transition">Actions</a>
+                    <button onclick="window.print()" class="bg-navy-800 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-navy-700 transition">
+                        Print Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 text-white py-12 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-teal-500 rounded-full filter blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl translate-x-1/2 translate-y-1/2"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 relative">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h1 class="font-display text-4xl font-bold mb-2">Restorative Dental</h1>
+                    <h2 class="text-xl text-navy-200 mb-4">Brian Aguirre Liquidation Analysis</h2>
+                    <p class="text-navy-300 text-sm">Partnership Buyout Valuation • January 8, 2026</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-navy-300 text-sm">Prepared by</p>
+                    <p class="font-semibold text-lg">North Castle Consulting</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Critical Alert Banner -->
+    <div class="bg-gradient-to-r from-red-600 to-red-500 text-white py-4 animate-pulse-slow">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-center gap-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+                <span class="font-semibold text-lg">CRITICAL FINDING: $722K variance in December 2024 management fees = <span class="underline">~$2.16M swing</span> in buyout value</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+
+        <!-- Executive Summary Section -->
+        <section id="summary" class="mb-12 opacity-0 animate-slide-in" style="animation-delay: 0.1s; animation-fill-mode: forwards;">
+            <h3 class="font-display text-2xl font-bold text-navy-900 mb-6 flex items-center gap-3">
+                <span class="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center text-navy-600">1</span>
+                Executive Summary
+            </h3>
+
+            <!-- Liquidation Waterfall -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-slate-200">
+                <h4 class="font-semibold text-navy-800 mb-4">Liquidation Waterfall (Values in $000s)</h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full max-w-lg">
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="py-3 text-navy-700">Outstanding: Intercompany Loans + RDG Fees + Expenses</td>
+                                <td class="py-3 text-right font-mono font-semibold text-green-600">$318</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 text-navy-700">Outstanding Loan Amounts</td>
+                                <td class="py-3 text-right font-mono font-semibold text-red-600">($2,021)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 text-navy-700">Partnership Draw</td>
+                                <td class="py-3 text-right font-mono font-semibold text-red-600">($31)</td>
+                            </tr>
+                            <tr class="bg-navy-50">
+                                <td class="py-3 font-semibold text-navy-900">Sub-total (before equity valuation)</td>
+                                <td class="py-3 text-right font-mono font-bold text-navy-900">($1,734)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Scenario Comparison Cards -->
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <!-- LTM Scenario -->
+                <div class="bg-white rounded-2xl shadow-lg border-2 border-red-200 overflow-hidden">
+                    <div class="bg-red-50 px-6 py-4 border-b border-red-100">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-semibold text-red-900">LTM Scenario (Dec '24 – Nov '25)</h4>
+                            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">UNDER REVIEW</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-navy-600">Total EBITDA</span>
+                                <span class="font-mono font-semibold">$2,097K</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-navy-600">Brian's Share (~37%)</span>
+                                <span class="font-mono font-semibold">$785K</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-navy-600">Valuation @ 5x</span>
+                                <span class="font-mono font-semibold">$3,926K</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-navy-600">Less: Adjustments</span>
+                                <span class="font-mono font-semibold text-red-600">($1,734K)</span>
+                            </div>
+                            <div class="border-t border-slate-200 pt-3 mt-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-navy-900">Net Due to Brian</span>
+                                    <span class="font-mono font-bold text-2xl text-red-600">$2,192K</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-red-600 text-sm mt-4 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            Contains unverified Dec '24 entries
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Annualized 2025 Scenario -->
+                <div class="bg-white rounded-2xl shadow-lg border-2 border-green-200 overflow-hidden">
+                    <div class="bg-green-50 px-6 py-4 border-b border-green-100">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-semibold text-green-900">Annualized 2025 Scenario</h4>
+                            <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">VERIFIED</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-navy-600">Total EBITDA</span>
+                                <span class="font-mono font-semibold">$792K</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-navy-600">Brian's Share (~37%)</span>
+                                <span class="font-mono font-semibold">$353K</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-navy-600">Valuation @ 5x</span>
+                                <span class="font-mono font-semibold">$1,765K</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-navy-600">Less: Adjustments</span>
+                                <span class="font-mono font-semibold text-red-600">($1,734K)</span>
+                            </div>
+                            <div class="border-t border-slate-200 pt-3 mt-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-navy-900">Net Due to Brian</span>
+                                    <span class="font-mono font-bold text-2xl text-green-600">$31K</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-green-600 text-sm mt-4 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            2025 data verified - all management fees tie out
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Difference Callout -->
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 text-center">
+                <p class="text-amber-800 text-sm uppercase tracking-wide font-semibold mb-2">Valuation Swing</p>
+                <p class="font-display text-4xl font-bold text-amber-900">Δ $2.16M</p>
+                <p class="text-amber-700 mt-2">Difference driven entirely by December 2024 RDG activity</p>
+            </div>
+        </section>
+
+        <!-- Sensitivity Analysis -->
+        <section id="sensitivity" class="mb-12 opacity-0 animate-slide-in" style="animation-delay: 0.2s; animation-fill-mode: forwards;">
+            <h3 class="font-display text-2xl font-bold text-navy-900 mb-6 flex items-center gap-3">
+                <span class="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center text-navy-600">2</span>
+                Sensitivity Analysis
+            </h3>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-200">
+                <h4 class="font-semibold text-navy-800 mb-4">Net Amount Due to Brian Aguirre by EBITDA Multiple ($000s)</h4>
+
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b-2 border-navy-200">
+                                    <th class="py-3 px-4 text-left text-navy-600 font-semibold">Multiple</th>
+                                    <th class="py-3 px-4 text-right text-red-600 font-semibold">LTM Scenario</th>
+                                    <th class="py-3 px-4 text-right text-green-600 font-semibold">Annualized 2025</th>
+                                    <th class="py-3 px-4 text-right text-navy-600 font-semibold">Difference</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="py-3 px-4 font-medium">3x</td>
+                                    <td class="py-3 px-4 text-right font-mono text-red-600">$622K</td>
+                                    <td class="py-3 px-4 text-right font-mono text-red-500">($378K)</td>
+                                    <td class="py-3 px-4 text-right font-mono">$1.0M</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="py-3 px-4 font-medium">4x</td>
+                                    <td class="py-3 px-4 text-right font-mono text-red-600">$1,407K</td>
+                                    <td class="py-3 px-4 text-right font-mono text-green-600">$407K</td>
+                                    <td class="py-3 px-4 text-right font-mono">$1.0M</td>
+                                </tr>
+                                <tr class="bg-amber-50 border-l-4 border-amber-400">
+                                    <td class="py-3 px-4 font-bold text-amber-900">5x (Base Case)</td>
+                                    <td class="py-3 px-4 text-right font-mono font-bold text-red-600">$2,192K</td>
+                                    <td class="py-3 px-4 text-right font-mono font-bold text-green-600">$31K</td>
+                                    <td class="py-3 px-4 text-right font-mono font-bold text-amber-900">$2.16M</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="py-3 px-4 font-medium">6x</td>
+                                    <td class="py-3 px-4 text-right font-mono text-red-600">$2,977K</td>
+                                    <td class="py-3 px-4 text-right font-mono text-green-600">$384K</td>
+                                    <td class="py-3 px-4 text-right font-mono">$2.59M</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition">
+                                    <td class="py-3 px-4 font-medium">7x</td>
+                                    <td class="py-3 px-4 text-right font-mono text-red-600">$3,762K</td>
+                                    <td class="py-3 px-4 text-right font-mono text-green-600">$737K</td>
+                                    <td class="py-3 px-4 text-right font-mono">$3.03M</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <canvas id="sensitivityChart" class="w-full"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EBITDA by Entity -->
+        <section class="mb-12 opacity-0 animate-slide-in" style="animation-delay: 0.25s; animation-fill-mode: forwards;">
+            <h3 class="font-display text-2xl font-bold text-navy-900 mb-6 flex items-center gap-3">
+                <span class="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center text-navy-600">3</span>
+                EBITDA by Practice Location
+            </h3>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-200 overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b-2 border-navy-200">
+                            <th class="py-3 px-4 text-left text-navy-600 font-semibold">Office</th>
+                            <th class="py-3 px-4 text-right text-navy-600 font-semibold">Annualized 2025</th>
+                            <th class="py-3 px-4 text-right text-navy-600 font-semibold">LTM EBITDA</th>
+                            <th class="py-3 px-4 text-right text-navy-600 font-semibold">Brian's %</th>
+                            <th class="py-3 px-4 text-left text-navy-600 font-semibold">Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-3 px-4 font-medium">Boulder</td>
+                            <td class="py-3 px-4 text-right font-mono">$109K</td>
+                            <td class="py-3 px-4 text-right font-mono">$131K</td>
+                            <td class="py-3 px-4 text-right">25%</td>
+                            <td class="py-3 px-4"></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-3 px-4 font-medium">Brighton</td>
+                            <td class="py-3 px-4 text-right font-mono text-red-600">($297K)</td>
+                            <td class="py-3 px-4 text-right font-mono text-red-600">($15K)</td>
+                            <td class="py-3 px-4 text-right">50%</td>
+                            <td class="py-3 px-4"></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-3 px-4 font-medium">Castle Rock</td>
+                            <td class="py-3 px-4 text-right font-mono text-red-600">($325K)</td>
+                            <td class="py-3 px-4 text-right font-mono text-red-600">($329K)</td>
+                            <td class="py-3 px-4 text-right">50%</td>
+                            <td class="py-3 px-4"></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-3 px-4 font-medium">Cherry Creek</td>
+                            <td class="py-3 px-4 text-right font-mono">$12K</td>
+                            <td class="py-3 px-4 text-right font-mono">$142K</td>
+                            <td class="py-3 px-4 text-right">38%</td>
+                            <td class="py-3 px-4"></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-3 px-4 font-medium">DRD (Broomfield)</td>
+                            <td class="py-3 px-4 text-right font-mono">$991K</td>
+                            <td class="py-3 px-4 text-right font-mono">$609K</td>
+                            <td class="py-3 px-4 text-right">50%</td>
+                            <td class="py-3 px-4"></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-3 px-4 font-medium">Longmont</td>
+                            <td class="py-3 px-4 text-right font-mono text-red-600">($21K)</td>
+                            <td class="py-3 px-4 text-right font-mono text-red-600">($8K)</td>
+                            <td class="py-3 px-4 text-right">50%</td>
+                            <td class="py-3 px-4"></td>
+                        </tr>
+                        <tr class="table-row-highlight animate-pulse-slow border-l-4 border-amber-400">
+                            <td class="py-3 px-4 font-bold text-amber-900">RDG (Management Co)</td>
+                            <td class="py-3 px-4 text-right font-mono font-bold">$83K</td>
+                            <td class="py-3 px-4 text-right font-mono font-bold text-amber-900">$1,277K</td>
+                            <td class="py-3 px-4 text-right font-bold">33%</td>
+                            <td class="py-3 px-4">
+                                <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">⚠️ VARIANCE DRIVER</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-3 px-4 font-medium">Lab</td>
+                            <td class="py-3 px-4 text-right font-mono">$238K</td>
+                            <td class="py-3 px-4 text-right font-mono">$290K</td>
+                            <td class="py-3 px-4 text-right">50%</td>
+                            <td class="py-3 px-4"></td>
+                        </tr>
+                        <tr class="bg-navy-50 border-t-2 border-navy-200">
+                            <td class="py-3 px-4 font-bold text-navy-900">Total</td>
+                            <td class="py-3 px-4 text-right font-mono font-bold">$792K</td>
+                            <td class="py-3 px-4 text-right font-mono font-bold">$2,097K</td>
+                            <td class="py-3 px-4 text-right font-bold">~37%</td>
+                            <td class="py-3 px-4"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- December 2024 Variance Section -->
+        <section id="variance" class="mb-12 print-break opacity-0 animate-slide-in" style="animation-delay: 0.3s; animation-fill-mode: forwards;">
+            <h3 class="font-display text-2xl font-bold text-navy-900 mb-6 flex items-center gap-3">
+                <span class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center text-red-600">4</span>
+                December 2024 Management Fee Variance
+            </h3>
+
+            <!-- Critical Banner -->
+            <div class="bg-red-600 text-white rounded-t-2xl px-6 py-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🔴</span>
+                    <div>
+                        <h4 class="font-bold text-lg">CRITICAL: December 2024 Reconciliation Required</h4>
+                        <p class="text-red-100 text-sm">This variance is driving the entire $2.16M swing in buyout value</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-b-2xl shadow-lg p-6 border border-slate-200 border-t-0">
+                <!-- Success Note -->
+                <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-6 flex items-center gap-3">
+                    <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <p class="text-green-800 font-medium">✓ All 2025 management fees (Jan–Nov) tie out perfectly between RDG and branches</p>
+                </div>
+
+                <!-- Variance Table -->
+                <div class="overflow-x-auto mb-6">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-navy-200">
+                                <th class="py-3 px-4 text-left text-navy-600 font-semibold">Branch</th>
+                                <th class="py-3 px-4 text-right text-navy-600 font-semibold">RDG Dec '24 Revenue</th>
+                                <th class="py-3 px-4 text-right text-navy-600 font-semibold">Branch Dec '24 Expense</th>
+                                <th class="py-3 px-4 text-right text-navy-600 font-semibold">▲ Variance</th>
+                                <th class="py-3 px-4 text-center text-navy-600 font-semibold">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="variance-critical">
+                                <td class="py-3 px-4 font-medium">Boulder RD</td>
+                                <td class="py-3 px-4 text-right font-mono">$96,987</td>
+                                <td class="py-3 px-4 text-right font-mono">$28,826</td>
+                                <td class="py-3 px-4 text-right font-mono font-bold text-red-600">$68,161</td>
+                                <td class="py-3 px-4 text-center"><span class="text-red-500 text-xl">🔴</span></td>
+                            </tr>
+                            <tr class="variance-critical">
+                                <td class="py-3 px-4 font-medium">Brighton RD</td>
+                                <td class="py-3 px-4 text-right font-mono">$49,329</td>
+                                <td class="py-3 px-4 text-right font-mono">$10,292</td>
+                                <td class="py-3 px-4 text-right font-mono font-bold text-red-600">$39,037</td>
+                                <td class="py-3 px-4 text-center"><span class="text-red-500 text-xl">🔴</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="py-3 px-4 font-medium">Castle Rock RD</td>
+                                <td class="py-3 px-4 text-right font-mono">$307</td>
+                                <td class="py-3 px-4 text-right font-mono">$307</td>
+                                <td class="py-3 px-4 text-right font-mono text-green-600">$0</td>
+                                <td class="py-3 px-4 text-center"><span class="text-green-500 text-xl">✅</span></td>
+                            </tr>
+                            <tr class="variance-critical border-l-4 border-red-500">
+                                <td class="py-3 px-4 font-bold text-red-900">Denver RD</td>
+                                <td class="py-3 px-4 text-right font-mono">$762,834</td>
+                                <td class="py-3 px-4 text-right font-mono">$248,716</td>
+                                <td class="py-3 px-4 text-right font-mono font-bold text-red-600 text-lg">$514,118</td>
+                                <td class="py-3 px-4 text-center"><span class="text-red-500 text-xl">🔴</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="py-3 px-4 font-medium">Longmont RD</td>
+                                <td class="py-3 px-4 text-right font-mono">$3,233</td>
+                                <td class="py-3 px-4 text-right font-mono">$3,233</td>
+                                <td class="py-3 px-4 text-right font-mono text-green-600">$0</td>
+                                <td class="py-3 px-4 text-center"><span class="text-green-500 text-xl">✅</span></td>
+                            </tr>
+                            <tr class="variance-critical">
+                                <td class="py-3 px-4 font-medium">Cherry Creek RD</td>
+                                <td class="py-3 px-4 text-right font-mono">$103,879</td>
+                                <td class="py-3 px-4 text-right font-mono">$3,269</td>
+                                <td class="py-3 px-4 text-right font-mono font-bold text-red-600">$100,610</td>
+                                <td class="py-3 px-4 text-center"><span class="text-red-500 text-xl">🔴</span></td>
+                            </tr>
+                            <tr class="bg-navy-50 border-t-2 border-navy-300">
+                                <td class="py-4 px-4 font-bold text-navy-900">Total</td>
+                                <td class="py-4 px-4 text-right font-mono font-bold">$1,016,569</td>
+                                <td class="py-4 px-4 text-right font-mono font-bold">$294,643</td>
+                                <td class="py-4 px-4 text-right font-mono font-bold text-red-600 text-xl">$721,926</td>
+                                <td class="py-4 px-4"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Explanatory Notes -->
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 rounded-xl p-4">
+                        <h5 class="font-semibold text-navy-800 mb-2">Accounting Treatment Note</h5>
+                        <p class="text-sm text-navy-600">Management fees at branch level are recorded in <strong>7306</strong> (sub-account of <strong>6500 Other G&A</strong>) — above the EBITDA line. Treatment is correct; December 2024 variance requires investigation.</p>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                        <h5 class="font-semibold text-amber-900 mb-2">Valuation Impact</h5>
+                        <p class="text-sm text-amber-800">At Brian's ~37% ownership and 5x multiple, this <strong>$722K variance = ~$1.6M</strong> impact on the buyout calculation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Non-Recurring Items Section -->
+        <section id="non-recurring" class="mb-12 opacity-0 animate-slide-in" style="animation-delay: 0.35s; animation-fill-mode: forwards;">
+            <h3 class="font-display text-2xl font-bold text-navy-900 mb-6 flex items-center gap-3">
+                <span class="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center text-navy-600">5</span>
+                Non-Recurring Items – December 2024
+            </h3>
+
+            <p class="text-navy-600 mb-6">The following December 2024 entries have been confirmed as non-recurring and will be excluded from normalized EBITDA:</p>
+
+            <div class="space-y-4">
+                <!-- Doctor Compensation -->
+                <details class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden group">
+                    <summary class="px-6 py-4 cursor-pointer flex items-center justify-between hover:bg-slate-50 transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                            <div>
+                                <h4 class="font-semibold text-navy-900">5000 Doctor Compensation</h4>
+                                <p class="text-sm text-navy-500">Year-end Gusto payroll true-up; no doctor comp should exist in RDG</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono font-bold text-lg text-red-600">$167,020</span>
+                            <span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full">EXCLUDE</span>
+                            <svg class="w-5 h-5 text-navy-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                    </summary>
+                    <div class="px-6 pb-6 border-t border-slate-100">
+                        <table class="w-full mt-4 text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-200">
+                                    <th class="py-2 text-left text-navy-600">Date</th>
+                                    <th class="py-2 text-left text-navy-600">Entry</th>
+                                    <th class="py-2 text-left text-navy-600">Memo</th>
+                                    <th class="py-2 text-right text-navy-600">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CA</td>
+                                    <td class="py-2 text-navy-500">–</td>
+                                    <td class="py-2 text-right font-mono text-red-600">($11,524)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CA</td>
+                                    <td class="py-2 text-navy-500">–</td>
+                                    <td class="py-2 text-right font-mono text-red-600">($3,992)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CPA</td>
+                                    <td class="py-2 text-navy-500">To match Gusto payroll reports at year end</td>
+                                    <td class="py-2 text-right font-mono">$182,537</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+
+                <!-- Employee Comp -->
+                <details class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden group">
+                    <summary class="px-6 py-4 cursor-pointer flex items-center justify-between hover:bg-slate-50 transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-3 h-3 bg-orange-500 rounded-full"></span>
+                            <div>
+                                <h4 class="font-semibold text-navy-900">5030 Employee Comp</h4>
+                                <p class="text-sm text-navy-500">Reclassification: Zac moved to GP ($135K), Office Manager reclass ($322K)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono font-bold text-lg text-green-600">($121,589)</span>
+                            <span class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">EXCLUDE</span>
+                            <svg class="w-5 h-5 text-navy-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                    </summary>
+                    <div class="px-6 pb-6 border-t border-slate-100">
+                        <p class="text-sm text-navy-600 mt-4 mb-3 bg-blue-50 p-3 rounded-lg">
+                            <strong>Note:</strong> Zac's ongoing compensation now runs through account 5081 (~$280K annually)
+                        </p>
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-200">
+                                    <th class="py-2 text-left text-navy-600">Date</th>
+                                    <th class="py-2 text-left text-navy-600">Entry</th>
+                                    <th class="py-2 text-left text-navy-600">Memo</th>
+                                    <th class="py-2 text-right text-navy-600">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CPA</td>
+                                    <td class="py-2 text-navy-500">To match Gusto payroll reports (Front Desk)</td>
+                                    <td class="py-2 text-right font-mono">$375,512</td>
+                                </tr>
+                                <tr class="bg-amber-50">
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CPA</td>
+                                    <td class="py-2 text-amber-800 font-medium">To reclass Zac's payments to GP</td>
+                                    <td class="py-2 text-right font-mono text-red-600">($135,386)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CPA</td>
+                                    <td class="py-2 text-navy-500">To reclass wages paid</td>
+                                    <td class="py-2 text-right font-mono text-red-600">($5,958)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CPA</td>
+                                    <td class="py-2 text-navy-500">To reclass wages paid</td>
+                                    <td class="py-2 text-right font-mono text-red-600">($103,016)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CPA</td>
+                                    <td class="py-2 text-navy-500">To match Gusto (Office Manager)</td>
+                                    <td class="py-2 text-right font-mono text-red-600">($321,602)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">Various</td>
+                                    <td class="py-2 font-mono text-xs">–</td>
+                                    <td class="py-2 text-navy-500">Other adjustments</td>
+                                    <td class="py-2 text-right font-mono">~$68K net</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+
+                <!-- Employee Benefits -->
+                <details class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden group">
+                    <summary class="px-6 py-4 cursor-pointer flex items-center justify-between hover:bg-slate-50 transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                            <div>
+                                <h4 class="font-semibold text-navy-900">5130 Employee Benefits</h4>
+                                <p class="text-sm text-navy-500">Year-end Gusto true-up for health insurance ($59K) and 401K ($16K)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono font-bold text-lg text-red-600">$69,556</span>
+                            <span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-3 py-1 rounded-full">EXCLUDE</span>
+                            <svg class="w-5 h-5 text-navy-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                    </summary>
+                    <div class="px-6 pb-6 border-t border-slate-100">
+                        <table class="w-full mt-4 text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-200">
+                                    <th class="py-2 text-left text-navy-600">Date</th>
+                                    <th class="py-2 text-left text-navy-600">Entry</th>
+                                    <th class="py-2 text-left text-navy-600">Memo</th>
+                                    <th class="py-2 text-right text-navy-600">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CPA</td>
+                                    <td class="py-2 text-navy-500">To match Gusto (Health Insurance – Clinical)</td>
+                                    <td class="py-2 text-right font-mono">$26,810</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CPA</td>
+                                    <td class="py-2 text-navy-500">To match Gusto (Health Insurance – Non-Clinical)</td>
+                                    <td class="py-2 text-right font-mono">$32,731</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">12/31/24</td>
+                                    <td class="py-2 font-mono text-xs">GCO_CPA</td>
+                                    <td class="py-2 text-navy-500">To match Gusto (401K)</td>
+                                    <td class="py-2 text-right font-mono">$15,967</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">Various</td>
+                                    <td class="py-2 font-mono text-xs">–</td>
+                                    <td class="py-2 text-navy-500">Shared expenses / payroll taxes</td>
+                                    <td class="py-2 text-right font-mono text-red-600">($6,951) net</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Summary -->
+            <div class="bg-navy-50 rounded-2xl p-6 mt-6">
+                <h4 class="font-semibold text-navy-900 mb-4">Non-Recurring Summary</h4>
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-navy-200">
+                            <th class="py-2 text-left text-navy-600">Account</th>
+                            <th class="py-2 text-right text-navy-600">Amount</th>
+                            <th class="py-2 text-right text-navy-600">Treatment</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-navy-100">
+                        <tr>
+                            <td class="py-3">Doctor Compensation</td>
+                            <td class="py-3 text-right font-mono">$167,020</td>
+                            <td class="py-3 text-right"><span class="text-red-600 font-medium">Exclude</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">Employee Comp</td>
+                            <td class="py-3 text-right font-mono">($121,589)</td>
+                            <td class="py-3 text-right"><span class="text-red-600 font-medium">Exclude</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">Employee Benefits</td>
+                            <td class="py-3 text-right font-mono">$69,556</td>
+                            <td class="py-3 text-right"><span class="text-red-600 font-medium">Exclude</span></td>
+                        </tr>
+                        <tr class="bg-navy-100 font-bold">
+                            <td class="py-3">Net Non-Recurring Impact</td>
+                            <td class="py-3 text-right font-mono">$114,987</td>
+                            <td class="py-3 text-right text-navy-900">Remove from EBITDA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Open Items / Action Items -->
+        <section id="action-items" class="mb-12 print-break opacity-0 animate-slide-in" style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+            <h3 class="font-display text-2xl font-bold text-navy-900 mb-6 flex items-center gap-3">
+                <span class="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center text-navy-600">6</span>
+                Action Items & Open Questions
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <!-- Critical: Management Fee Variance -->
+                <div class="bg-white rounded-2xl shadow-lg border-l-4 border-red-500 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start gap-3 mb-4">
+                            <span class="text-2xl">🔴</span>
+                            <div>
+                                <span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded-full">CRITICAL</span>
+                                <h4 class="font-bold text-navy-900 mt-2">Management Fee Variance – $722K</h4>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p><span class="font-medium text-navy-600">Owner:</span> Camille / Savannah</p>
+                            <p><span class="font-medium text-navy-600">Impact:</span> <span class="text-red-600 font-bold">~$1.6M at 5x multiple</span></p>
+                            <p><span class="font-medium text-navy-600">Question:</span> What drove inflated December 2024 RDG bookings?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Partnership Income -->
+                <div class="bg-white rounded-2xl shadow-lg border-l-4 border-amber-500 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start gap-3 mb-4">
+                            <span class="text-2xl">🟡</span>
+                            <div>
+                                <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded-full">HIGH</span>
+                                <h4 class="font-bold text-navy-900 mt-2">Partnership Income – $311,590</h4>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p><span class="font-medium text-navy-600">Owner:</span> Camille / Savannah</p>
+                            <p><span class="font-medium text-navy-600">Impact:</span> Up to ~$580K at 5x</p>
+                            <p><span class="font-medium text-navy-600">Question:</span> Is this recurring annual income or one-time entry?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brian Aguirre BS Payable -->
+                <div class="bg-white rounded-2xl shadow-lg border-l-4 border-amber-500 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start gap-3 mb-4">
+                            <span class="text-2xl">🟡</span>
+                            <div>
+                                <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded-full">HIGH</span>
+                                <h4 class="font-bold text-navy-900 mt-2">Brian Aguirre BS Payable – ~$315K</h4>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p><span class="font-medium text-navy-600">Owner:</span> Savannah</p>
+                            <p><span class="font-medium text-navy-600">Impact:</span> Direct dollar impact</p>
+                            <p><span class="font-medium text-navy-600">Question:</span> What does this balance represent? (Previously $270K)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Non-Recurring Confirmations -->
+                <div class="bg-white rounded-2xl shadow-lg border-l-4 border-green-500 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start gap-3 mb-4">
+                            <span class="text-2xl">🟢</span>
+                            <div>
+                                <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-full">PENDING</span>
+                                <h4 class="font-bold text-navy-900 mt-2">Non-Recurring Confirmations – $115K net</h4>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <p><span class="font-medium text-navy-600">Owner:</span> Vin</p>
+                            <p><span class="font-medium text-navy-600">Status:</span> Pending approval of exclusions listed above</p>
+                            <p><span class="font-medium text-navy-600">Action:</span> Confirm non-recurring treatment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <p class="font-semibold">North Castle Consulting</p>
+                    <p class="text-navy-300 text-sm">Analysis prepared January 8, 2026</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-navy-300 text-sm">* Input values may be subject to change upon consultation with Zac or Vin</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 bg-navy-800 text-white w-12 h-12 rounded-full shadow-lg hover:bg-navy-700 transition flex items-center justify-center no-print">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <script>
+        // Sensitivity Chart
+        const ctx = document.getElementById('sensitivityChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['3x', '4x', '5x', '6x', '7x'],
+                datasets: [
+                    {
+                        label: 'LTM Scenario',
+                        data: [622, 1407, 2192, 2977, 3762],
+                        backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                        borderColor: 'rgb(239, 68, 68)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Annualized 2025',
+                        data: [-378, 407, 31, 384, 737],
+                        backgroundColor: 'rgba(34, 197, 94, 0.7)',
+                        borderColor: 'rgb(34, 197, 94)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Net to Brian ($000s)',
+                        font: { size: 14, weight: 'bold' }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value + 'K';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
